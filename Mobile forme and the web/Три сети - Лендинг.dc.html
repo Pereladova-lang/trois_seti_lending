@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cline x1='10' y1='30' x2='30' y2='30' stroke='%23B08D3E' stroke-width='2'/%3E%3Cline x1='10' y1='30' x2='20' y2='10' stroke='%23B08D3E' stroke-width='2'/%3E%3Cline x1='30' y1='30' x2='20' y2='10' stroke='%23B08D3E' stroke-width='2'/%3E%3Ccircle cx='10' cy='30' r='5' fill='%236B4F9E'/%3E%3Ccircle cx='30' cy='30' r='5' fill='%236B4F9E'/%3E%3Ccircle cx='20' cy='10' r='5' fill='%236B4F9E'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&amp;family=Sora:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  body{margin:0;-webkit-font-smoothing:antialiased}
+  *{box-sizing:border-box}
+  a{color:#6B4F9E;text-decoration:none}
+  a:hover{color:#4F3878;text-decoration:underline}
+  input::placeholder{color:#a39cb0}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</helmet>
+
+<div style="--purple:#6B4F9E;--purple-dark:#4F3878;--gold:#B08D3E;--gold-dark:#8C6E2E;--bg:#FAF7F1;--surface:#FFFFFF;--ink:#2B2438;--muted:#6B6478;--line:#E7E1D8; font-family:'Sora',system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.55; overflow-x:hidden;">
+
+  <!-- NAV -->
+  <header style="position:sticky; top:0; z-index:40; background:rgba(250,247,241,0.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; padding:14px clamp(18px,4vw,48px); gap:16px;">
+    <a href="#hero" style="display:flex; align-items:center; gap:10px; text-decoration:none;">
+      <svg width="26" height="26" viewBox="0 0 40 40"><line x1="10" y1="30" x2="30" y2="30" stroke="var(--gold)" stroke-width="2.5"></line><line x1="10" y1="30" x2="20" y2="10" stroke="var(--gold)" stroke-width="2.5"></line><line x1="30" y1="30" x2="20" y2="10" stroke="var(--gold)" stroke-width="2.5"></line><circle cx="10" cy="30" r="5.5" fill="var(--purple)"></circle><circle cx="30" cy="30" r="5.5" fill="var(--purple)"></circle><circle cx="20" cy="10" r="5.5" fill="var(--purple)"></circle></svg>
+      <span style="font-family:'Source Serif 4',serif; font-size:18px; font-weight:600; color:var(--ink);">Три сети</span>
+    </a>
+    <sc-if value="{{ !isMobile }}" hint-placeholder-val="{{ true }}">
+      <nav style="display:flex; align-items:center; gap:clamp(14px,2vw,28px); font-size:15px; color:var(--muted);">
+        <a href="#method" style="color:var(--muted);">О курсе</a>
+        <a href="#program" style="color:var(--muted);">Программа</a>
+        <a href="#author" style="color:var(--muted);">Автор</a>
+        <a href="#pricing" style="color:var(--muted);">Тарифы</a>
+        <a href="#faq" style="color:var(--muted);">Вопросы</a>
+      </nav>
+    </sc-if>
+    <a href="#cta-form" style="background:var(--gold); color:var(--ink); font-weight:600; font-size:14px; padding:10px 18px; border-radius:10px; white-space:nowrap;">Записаться</a>
+  </header>
+
+  <!-- HERO -->
+  <section id="hero" data-screen-label="Первый экран" style="position:relative; padding:clamp(56px,10vw,110px) clamp(20px,6vw,64px) clamp(48px,8vw,88px); max-width:1120px; margin:0 auto; overflow:hidden;">
+    <svg style="position:absolute; right:-60px; top:20px; width:340px; height:340px; opacity:0.07; z-index:0;" viewBox="0 0 200 200"><line x1="40" y1="160" x2="160" y2="160" stroke="#B08D3E" stroke-width="3"></line><line x1="40" y1="160" x2="100" y2="40" stroke="#B08D3E" stroke-width="3"></line><line x1="160" y1="160" x2="100" y2="40" stroke="#B08D3E" stroke-width="3"></line><circle cx="40" cy="160" r="26" fill="#6B4F9E"></circle><circle cx="160" cy="160" r="26" fill="#6B4F9E"></circle><circle cx="100" cy="40" r="26" fill="#6B4F9E"></circle></svg>
+    <div style="position:relative; z-index:1; max-width:760px;">
+      <div style="display:inline-block; font-size:13px; font-weight:600; letter-spacing:0.04em; color:var(--purple-dark); background:rgba(107,79,158,0.09); padding:6px 14px; border-radius:100px; margin-bottom:22px;">Практический групповой курс</div>
+      <h1 style="font-family:'Source Serif 4',serif; font-weight:600; font-size:clamp(32px,5.6vw,54px); line-height:1.18; margin:0 0 22px; color:var(--ink);">Как выключать тревожную петлю за 90 секунд — вместо того, чтобы часами прокручивать одну мысль</h1>
+      <p style="font-size:clamp(16px,2vw,19px); color:var(--muted); margin:0 0 30px; max-width:600px;">Практический групповой курс саморегуляции внимания, мышления и действия на основе карты трёх сетей, на которых работает мозг (DMN / SN / CEN). <br>6 недель, онлайн, группа 6–12 человек.</p>
+      <a href="#cta-form" style="display:inline-block; background:var(--gold); color:var(--ink); font-weight:600; font-size:16px; padding:16px 30px; border-radius:12px;">Записаться на ближайший поток →</a>
+    </div>
+  </section>
+
+  <!-- SCREENING -->
+  <section id="screening" data-screen-label="Скрининг" style="padding:clamp(40px,7vw,72px) clamp(20px,6vw,64px); max-width:1120px; margin:0 auto;">
+    <h2 style="font-family:'Source Serif 4',serif; font-weight:600; font-size:clamp(24px,3.6vw,34px); margin:0 0 28px; color:var(--ink);">Этот курс для вас, если…</h2>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; margin-bottom:20px;">
+      <sc-for list="{{ screeningItems }}" as="item" hint-placeholder-count="4">
+        <div style="display:flex; gap:12px; align-items:flex-start; background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:20px;">
+          <svg width="20" height="20" viewBox="0 0 20 20" style="flex-shrink:0; margin-top:2px;"><circle cx="10" cy="10" r="9" fill="none" stroke="var(--purple)" stroke-width="1.6"></circle><path d="M6 10.5l2.6 2.6L14 7.5" stroke="var(--purple)" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <span style="font-size:15.5px; color:var(--ink);">{{ item.text }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:flex; gap:10px; align-items:flex-start; background:rgba(176,141,62,0.08); border:1px solid rgba(176,141,62,0.25); border-radius:12px; padding:14px 16px;">
+      <span style="font-size:13.5px; color:var(--gold-dark); font-weight:600;">Важно:</span>
+      <span style="font-size:13.5px; color:var(--muted);">не подходит при остром кризисе, суицидальном риске или психотических симптомах — в этих случаях нужна индивидуальная помощь специалиста.</span>
+    </div>
+  </section>
+
+  <!-- COST OF INACTION -->
+  <section id="cost" data-screen-label="Цена бездействия" style="padding:clamp(40px,7vw,72px) clamp(20px,6vw,64px); max-width:1120px; margin:0 auto;">
+    <h2 style="font-family:'Source Serif 4',serif; font-weight:600; font-size:clamp(24px,3.6vw,34px); margin:0 0 8px; color:var(--ink);">Цена бездействия</h2>
+    <p style="font-family:'Source Serif 4',serif; font-weight:600; font-size:clamp(26px,4vw,38px); color:var(--purple-dark); margin:0 0 32px;">≈ 40–60 минут в день уходит на прокручивание одной и той же тревожной мысли</p>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px;">
+      <sc-for list="{{ consequenceCards }}" as="c" hint-placeholder-count="4">
+        <div style="background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:22px;">
+          <div style="font-size:15.5px; color:var(--ink); font-weight:500;">{{ c.text }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- INSIGHT -->
+  <section id="insight" data-screen-label="Инсайт" style="background:var(--purple-dark); padding:clamp(48px,8vw,90px) clamp(20px,6vw,64px);">
+    <div style="max-width:820px; margin:0 auto; text-align:center;">
+      <div style="font-family:'Source Serif 4',serif; font-size:44px; color:rgba(255,255,255,0.35); line-height:1;">"</div>
+      <p style="font-family:'Source Serif 4',serif; font-weight:500; font-size:clamp(22px,3.4vw,32px); line-height:1.4; color:#FFFFFF; margin:0;">Дело не в силе воли и не в характере. У мозга просто нет отработанного навыка переключения между тремя режимами — поэтому переключение происходит поздно и хаотично.</p>
+    </div>
+  </section>
+
+  <!-- METHOD -->
+  <section id="method" data-screen-label="Метод" style="padding:clamp(48px,8vw,90px) clamp(20px,6vw,64px); max-width:1120px; margin:0 auto;">
+    <h2 style="font-family:'Source Serif 4',serif; font-weight:600; font-size:clamp(24px,3.6vw,34px); margin:0 0 12px; color:var(--ink);">Метод «Карта трёх сетей»</h2>
+    <p style="font-size:16px; color:var(--muted); max-width:640px; margin:0 0 40px;">Мозг работает в трёх режимах внимания. Курс учит замечать, в каком режиме вы находитесь сейчас, и осознанно переключаться.</p>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:40px; align-items:center;">
+      <div style="position:relative; width:100%; max-width:340px; aspect-ratio:1.1; margin:0 auto;">
+        <div style="position:absolute; top:0; left:8%; width:58%; height:58%; border-radius:50%; background:rgba(107,79,158,0.55); display:flex; align-items:center; justify-content:center; text-align:center; padding:10px;">
+          <span style="font-size:13px; font-weight:600; color:#fff;">DMN<br><span style="font-weight:400; font-size:11px;">сеть по умолчанию</span></span>
+        </div>
+        <div style="position:absolute; top:0; right:2%; width:58%; height:58%; border-radius:50%; background:rgba(176,141,62,0.6); display:flex; align-items:center; justify-content:center; text-align:center; padding:10px;">
+          <span style="font-size:13px; font-weight:600; color:#fff;">SN<br><span style="font-weight:400; font-size:11px;">сеть значимости</span></span>
+        </div>
+        <div style="position:absolute; bottom:0; left:28%; width:58%; height:58%; border-radius:50%; background:rgba(43,36,56,0.72); display:flex; align-items:center; justify-content:center; text-align:center; padding:10px;">
+          <span style="font-size:13px; font-weight:600; color:#fff;">CEN<br><span style="font-weight:400; font-size:11px;">исполнительная сеть</span></span>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:18px;">
+        <div><strong style="color:var(--purple-dark);">DMN</strong><span style="color:var(--muted);"> — включается, когда мозг не занят конкретной задачей: блуждание мыслей, воспоминания, тревожные петли.</span></div>
+        <div><strong style="color:var(--gold-dark);">SN</strong><span style="color:var(--muted);"> — замечает, что происходит что-то важное, и переключает внимание на это.</span></div>
+        <div><strong style="color:var(--ink);">CEN</strong><span style="color:var(--muted);"> — отвечает за целенаправленное внимание, планирование и решения под нагрузкой.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAM -->
+  <section id="program" data-screen-label="Программа" style="padding:clamp(48px,8vw,90px) clamp(20px,6vw,64px); max-width:800px; margin:0 auto;">
+    <h2 style="font-family:'Source Serif 4',serif; font-weight:600; font-size:clamp(24px,3.6vw,34px); margin:0 0 28px; color:var(--ink);">Программа — 6 модулей</h2>
+    <div style="display:flex; flex-direction:column; gap:10px;">
+      <sc-for list="{{ modules }}" as="m" hint-placeholder-count="6">
+        <div style="background:var(--surface); border:1px solid var(--line); border-radius:16px; overflow:hidden;">
+          <div onClick="{{ m.toggle }}" style="display:flex; align-items:center; gap:16px; padding:18px 20px; cursor:pointer;">
+            <span style="font-family:'Source Serif 4',serif; font-weight:600; color:var(--gold-dark); font-size:15px; flex-shrink:0;">{{ m.numLabel }}</span>
+            <span style="flex:1; font-size:16px; font-weight:500; color:var(--ink);">{{ m.title }}</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" style="transform:{{ m.chevRotate }}; transition:transform 0.2s; flex-shrink:0;"><path d="M4 6l4 4 4-4" stroke="var(--muted)" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </div>
+          <sc-if value="{{ m.isOpen }}">
+            <div style="padding:0 20px 20px 56px; font-size:14.5px; color:var(--muted);">Неделя {{ m.week }} курса.</div>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- BENEFITS -->
+  <section id="benefits" data-screen-label="Что это даёт" style="padding:clamp(40px,7vw,72px) clamp(20px,6vw,64px); max-width:1120px; margin:0 auto;">
+    <h2 style="font-family:'Source Serif 4',serif; font-weight:600; font-size:clamp(24px,3.6vw,34px); margin:0 0 28px; color:var(--ink);">Что это даёт</h2>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px;">
+      <sc-for list="{{ benefits }}" as="b" hint-placeholder-count="5">
+        <div style="display:flex; gap:12px; align-items:flex-start;">
+          <svg width="20" height="20" viewBox="0 0 20 20" style="flex-shrink:0; margin-top:2px;"><circle cx="10" cy="10" r="9" fill="none" stroke="var(--gold)" stroke-width="1.6"></circle><path d="M6 10.5l2.6 2.6L14 7.5" stroke="var(--gold)" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <span style="font-size:15.5px; color:var(--ink);">{{ b.text }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section id="timeline" data-screen-label="Если ничего не менять" style="padding:clamp(40px,7vw,72px) clamp(20px,6vw,64px); max-width:1120px; margin:0 auto;">
+    <h2 style="font-family:'Source Serif 4',serif; font-weight:600; font-size:clamp(24px,3.6vw,34px); margin:0 0 28px; color:var(--ink);">Что будет, если ничего не менять</h2>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px;">
+      <sc-for list="{{ timelineItems }}" as="t" hint-placeholder-count="3">
+        <div style="border-left:3px solid var(--purple); padding-left:18px;">
+          <div style="font-family:'Source Serif 4',serif; font-weight:600; font-size:16px; color:var(--purple-dark); margin-bottom:8px;">{{ t.period }}</div>
+          <div style="font-size:15px; color:var(--muted);">{{ t.text }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- AUTHOR -->
+  <section id="author" data-screen-label="Автор курса" style="padding:clamp(48px,8vw,90px) clamp(20px,6vw,64px); max-width:1120px; margin:0 auto;">
+    <h2 style="font-family:'Source Serif 4',serif; font-weight:600; font-size:clamp(24px,3.6vw,34px); margin:0 0 32px; color:var(--ink);">Автор курса</h2>
+    <div style="display:grid; grid-template-columns:minmax(220px,300px) 1fr; gap:40px; align-items:start;">
+      <img src="uploads/author_photo-1789395024794-d288.jpg" alt="Автор курса" style="width:100%; aspect-ratio:4/5; object-fit:cover; border-radius:20px;">
+      <div>
+        <p style="font-size:16.5px; color:var(--ink); margin:0 0 20px;">Нейропсихолог и педагог с 25-летним опытом практики. Адаптировала модель трёх сетей для группового формата на основе собственного клинического и преподавательского опыта.</p>
+        <div style="display:flex; gap:10px; align-items:flex-start; background:rgba(107,79,158,0.07); border-radius:14px; padding:16px 18px; margin-bottom:24px;">
+          <span style="font-size:14px; color:var(--muted);">Честно: курс как целостная программа проходит первичную обкатку. Это не «продукт с историей», а тщательно спроектированная программа на доказательных компонентах.</span>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:14px;">
+          <sc-for list="{{ authorStats }}" as="s" hint-placeholder-count="4">
+            <div style="text-align:center; background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:16px 8px;">
+              <div style="font-family:'Source Serif 4',serif; font-weight:600; font-size:20px; color:var(--purple-dark);">{{ s.num }}</div>
+              <div style="font-size:12.5px; color:var(--muted); margin-top:4px;">{{ s.label }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL PROOF PLACEHOLDER -->
+  <section id="proof" data-screen-label="Почему я создала этот курс" style="padding:clamp(40px,7vw,72px) clamp(20px,6vw,64px); max-width:800px; margin:0 auto;">
+    <h2 style="font-family: 'Source Serif 4',serif; font-weight: 600; font-size: clamp(22px,3.2vw,30px); margin: 0 0 18px; color: var(--ink); margin-bottom: 12px">Почему я создала этот курс</h2>
+    <p style="font-size:16px; color:var(--muted); margin:0;">За годы практики я снова и снова убеждалась в одном и то же: люди справляются с тревогой не потому, что стали сильнее духом, а потому что научились замечать, в каком режиме работает их внимание, и вовремя переключаться. Отзывов пока нет — курс новый, это первый поток. Программа собрана из компонентов, которые я годами использую в индивидуальной работе, и теперь впервые адаптирована для группы.</p>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" data-screen-label="Тарифы" style="padding:clamp(48px,8vw,90px) clamp(20px,6vw,64px); max-width:1120px; margin:0 auto;">
+    <h2 style="font-family:'Source Serif 4',serif; font-weight:600; font-size:clamp(24px,3.6vw,34px); margin:0 0 14px; color:var(--ink);">Тарифы</h2>
+    <p style="font-size:15.5px; color:var(--muted); max-width:640px; margin:0 0 28px;">Индивидальная консультация нейропсихолога — от 4 000–6 000 ₽ за 60 минут. Здесь — 6 недель работы по цене одной-двух консультаций.</p>
+    <div style="display:inline-flex; background:var(--surface); border:1px solid var(--line); border-radius:100px; padding:4px; margin-bottom:28px;">
+      <button onClick="{{ setFull }}" style="border:none; background:{{ fullBg }}; color:{{ fullColor }}; font-size:13.5px; font-weight:600; padding:9px 18px; border-radius:100px; cursor:pointer;">Сразу</button>
+      <button onClick="{{ setInstallments }}" style="border:none; background:{{ instBg }}; color:{{ instColor }}; font-size:13.5px; font-weight:600; padding:9px 18px; border-radius:100px; cursor:pointer;">Частями ×3</button>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px;">
+      <div style="background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:30px;">
+        <div style="font-family:'Source Serif 4',serif; font-weight:600; font-size:20px; color:var(--ink); margin-bottom:6px;">Опора</div>
+        <div style="font-family:'Source Serif 4',serif; font-weight:600; font-size:32px; color:var(--purple-dark); margin-bottom:20px;">{{ priceOpora }}</div>
+        <ul style="list-style:none; margin:0 0 24px; padding:0; display:flex; flex-direction:column; gap:10px;">
+          <li style="font-size:14.5px; color:var(--muted);">6 встреч + запись</li>
+          <li style="font-size:14.5px; color:var(--muted);">Дневник самонаблюдения</li>
+          <li style="font-size:14.5px; color:var(--muted);">Бланк самодиагностики «до/после»</li>
+          <li style="font-size:14.5px; color:var(--muted);">Доступ 3 месяца</li>
+        </ul>
+        <a href="#cta-form" style="display:block; text-align:center; background:transparent; border:1.5px solid var(--purple); color:var(--purple-dark); font-weight:600; font-size:15px; padding:13px; border-radius:12px;">Выбрать «Опору»</a>
+      </div>
+      <div style="background:var(--purple-dark); border-radius:20px; padding:30px; position:relative; color:#fff;">
+        <div style="position:absolute; top:-12px; right:24px; background:var(--gold); color:var(--ink); font-size:12px; font-weight:700; padding:5px 12px; border-radius:100px;">РЕКОМЕНДУЕМ</div>
+        <div style="font-family:'Source Serif 4',serif; font-weight:600; font-size:20px; margin-bottom:6px;">Опора+</div>
+        <div style="font-family:'Source Serif 4',serif; font-weight:600; font-size:32px; color:#F0C674; margin-bottom:20px;">{{ priceOporaPlus }}</div>
+        <ul style="list-style:none; margin:0 0 24px; padding:0; display:flex; flex-direction:column; gap:10px;">
+          <li style="font-size:14.5px; color:rgba(255,255,255,0.85);">Всё из «Опоры»</li>
+          <li style="font-size:14.5px; color:rgba(255,255,255,0.85);">Интеграционная встреча через 3–4 недели</li>
+          <li style="font-size:14.5px; color:rgba(255,255,255,0.85);">Личный разбор протокола</li>
+          <li style="font-size:14.5px; color:rgba(255,255,255,0.85);">Закрытый чат с ведущим</li>
+          <li style="font-size:14.5px; color:rgba(255,255,255,0.85);">Доступ 6 месяцев</li>
+        </ul>
+        <a href="#cta-form" style="display:block; text-align:center; background:var(--gold); color:var(--ink); font-weight:600; font-size:15px; padding:13px; border-radius:12px;">Выбрать «Опору+»</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- GUARANTEE -->
+  <section id="guarantee" data-screen-label="Гарантия" style="padding:clamp(36px,6vw,60px) clamp(20px,6vw,64px); max-width:800px; margin:0 auto; text-align:center;">
+    <p style="font-size:16px; color:var(--muted); margin:0;">Я не обещаю, что вы точно избавитесь от тревоги, но гарантирую процесс: если вы посетили первые два занятия и формат не подошёл — я верну стоимость оставшихся занятий, за вычетом налогов и комиссий банка.</p>
+  </section>
+
+  <!-- FINAL CTA + FORM -->
+  <section id="cta-form" data-screen-label="Финальный CTA" style="background:rgba(107,79,158,0.06); padding:clamp(48px,8vw,90px) clamp(20px,6vw,64px);">
+    <div style="max-width:520px; margin:0 auto;">
+      <h2 style="font-family:'Source Serif 4',serif; font-weight:600; font-size:clamp(24px,3.6vw,32px); text-align:center; margin:0 0 10px; color:var(--ink);">Осталось немного мест в потоке</h2>
+      <p style="font-size:15px; color:var(--muted); text-align:center; margin:0 0 32px;">Группа набирается небольшая — 6–12 человек.</p>
+      <sc-if value="{{ !submitted }}" hint-placeholder-val="{{ true }}">
+        <div style="background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:28px;">
+          <div style="display:flex; flex-direction:column; gap:14px;">
+            <input value="{{ form.name }}" onChange="{{ onNameChange }}" placeholder="Ваше имя" style="border:1px solid var(--line); border-radius:12px; padding:13px 16px; font-size:15px; font-family:'Sora',sans-serif; background:var(--bg); color:var(--ink);">
+            <input value="{{ form.contact }}" onChange="{{ onContactChange }}" placeholder="Телефон или e-mail" style="border:1px solid var(--line); border-radius:12px; padding:13px 16px; font-size:15px; font-family:'Sora',sans-serif; background:var(--bg); color:var(--ink);">
+            <label style="display:flex; gap:10px; align-items:flex-start; font-size:13px; color:var(--muted); cursor:pointer;">
+              <input type="checkbox" checked="{{ form.consent }}" onChange="{{ onConsentChange }}" style="margin-top:2px; accent-color:var(--purple);">
+              <span>Согласен(на) с <a href="#" style="color:var(--purple-dark);">политикой конфиденциальности</a> и на <a href="#" style="color:var(--purple-dark);">обработку персональных данных</a></span>
+            </label>
+            <sc-if value="{{ formError }}">
+              <span style="font-size:13px; color:#B23A3A;">{{ formError }}</span>
+            </sc-if>
+            <button onClick="{{ onSubmit }}" style="border:none; background:var(--gold); color:var(--ink); font-weight:600; font-size:16px; padding:15px; border-radius:12px; cursor:pointer; margin-top:6px;">Записаться на ближайший поток →</button>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ submitted }}">
+        <div style="background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:36px; text-align:center;">
+          <svg width="40" height="40" viewBox="0 0 40 40" style="margin:0 auto 16px; display:block;"><circle cx="20" cy="20" r="18" fill="none" stroke="var(--purple)" stroke-width="2"></circle><path d="M12 21l5 5 11-11" stroke="var(--purple)" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <div style="font-family:'Source Serif 4',serif; font-weight:600; font-size:20px; color:var(--ink); margin-bottom:8px;">Заявка принята</div>
+          <div style="font-size:14.5px; color:var(--muted);">Мы свяжемся с вами в течение суток, чтобы обсудить ближайший поток.</div>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" data-screen-label="FAQ" style="padding:clamp(48px,8vw,90px) clamp(20px,6vw,64px); max-width:800px; margin:0 auto;">
+    <h2 style="font-family:'Source Serif 4',serif; font-weight:600; font-size:clamp(24px,3.6vw,34px); margin:0 0 28px; color:var(--ink);">Вопросы</h2>
+    <div style="display:flex; flex-direction:column; gap:10px;">
+      <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="5">
+        <div style="background:var(--surface); border:1px solid var(--line); border-radius:16px; overflow:hidden;">
+          <div onClick="{{ f.toggle }}" style="display:flex; align-items:center; gap:16px; padding:18px 20px; cursor:pointer;">
+            <span style="flex:1; font-size:16px; font-weight:500; color:var(--ink);">{{ f.q }}</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" style="transform:{{ f.chevRotate }}; transition:transform 0.2s; flex-shrink:0;"><path d="M4 6l4 4 4-4" stroke="var(--muted)" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </div>
+          <sc-if value="{{ f.isOpen }}">
+            <div style="padding:0 20px 20px; font-size:14.5px; color:var(--muted); line-height:1.6;">{{ f.a }}</div>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="border-top:1px solid var(--line); padding:32px clamp(20px,6vw,64px); display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between; align-items:center;">
+    <span style="font-size:13px; color:var(--muted);">© 2026 «Три сети». Все права защищены.</span>
+    <div style="display:flex; gap:20px; flex-wrap:wrap;">
+      <a href="#" style="font-size:13px; color:var(--muted);">Политика конфиденциальности</a>
+      <a href="#" style="font-size:13px; color:var(--muted);">Политика обработки персональных данных</a>
+      <a href="#" style="font-size:13px; color:var(--muted);">Публичная оферта</a>
+    </div>
+  </footer>
+
+  <!-- STICKY MOBILE CTA -->
+  <sc-if value="{{ isMobile }}">
+    <div style="position:fixed; bottom:0; left:0; right:0; z-index:50; background:var(--surface); border-top:1px solid var(--line); padding:12px 16px; box-shadow:0 -4px 16px rgba(0,0,0,0.06);">
+      <a href="#cta-form" style="display:block; text-align:center; background:var(--gold); color:var(--ink); font-weight:600; font-size:15px; padding:14px; border-radius:12px;">Записаться на ближайший поток →</a>
+    </div>
+  </sc-if>
+  <div style="height:{{ mobileSpacerHeight }};"></div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    isMobile: typeof window !== 'undefined' && window.innerWidth <= 720,
+    openModule: null,
+    openFaq: null,
+    pricingMode: 'full',
+    form: { name: '', contact: '', consent: false },
+    submitted: false,
+    formError: ''
+  };
+
+  screening = [
+    { text: 'Крутится одна мысль по кругу часами' },
+    { text: 'Трудно удержать фокус' },
+    { text: 'Плохо считываете сигналы тела и эмоций' },
+    { text: 'Готовы к 10–20 мин практики в день 6 недель подряд' }
+  ];
+
+  consequences = [
+    { text: 'Несделанные задачи' },
+    { text: 'Разговоры «на автомате»' },
+    { text: 'Решения в перегрузе' },
+    { text: 'Сон, который не восстанавливает' }
+  ];
+
+  moduleData = [
+    { title: 'Карта трёх сетей — общий язык для описания состояний внимания', week: 1 },
+    { title: 'Фокус и произвольное внимание — «дыхательный якорь со счётом»', week: 2 },
+    { title: 'Сигнал и переключение — считывание телесных и эмоциональных сигналов', week: 3 },
+    { title: 'Руминация как ресурс — отделяем полезное размышление от руминации', week: 4 },
+    { title: 'Интеграция под нагрузкой — переключение при двойной нагрузке', week: 5 },
+    { title: 'Перенос и закрепление — персональный протокол практики', week: 6 }
+  ];
+
+  benefitsData = [
+    { text: 'Конкретный протокол на момент' },
+    { text: 'Телесно-проверяемый язык состояний' },
+    { text: '6 недель регулярной практики, а не разовый вебинар' },
+    { text: 'Бережный формат без давления раскрываться' },
+    { text: 'Персональный итоговый протокол' }
+  ];
+
+  timelineData = [
+    { period: 'Через месяц', text: 'Привычка прокручивать мысли по кругу закрепляется — переключаться становится ещё труднее.' },
+    { period: 'Через полгода', text: 'Фоновая тревога становится состоянием по умолчанию, а не отдельным эпизодом.' },
+    { period: 'Через год', text: 'Накопленная усталость от постоянного самоконтроля без навыка переключения.' }
+  ];
+
+  authorStatsData = [
+    { num: '25 лет', label: 'практики' },
+    { num: '6 недель', label: 'программы' },
+    { num: '6–12', label: 'человек в группе' },
+    { num: '10–20 мин', label: 'практики в день' }
+  ];
+
+  faqData = [
+    { q: 'Это терапия?', a: 'Нет. Это психообразовательный курс: обучение навыку переключения между режимами внимания. Он не заменяет психотерапию и не подходит при остром кризисе, суицидальном риске или психотических симптомах — в этих случаях нужна индивидуальная помощь специалиста.' },
+    { q: 'Чем отличается от медитации?', a: 'Медитация тренирует состояние покоя. Здесь цель — навык: заметить, в каком режиме сейчас работает мозг (DMN, SN или CEN), и осознанно переключиться. Практики короче медитативных и привязаны к конкретным ситуациям.' },
+    { q: 'Хватит ли 10–20 минут в день?', a: 'Да, если заниматься каждый день 6 недель подряд. Навык переключения закрепляется регулярностью, а не длительностью одной сессии.' },
+    { q: 'Что если пропущу занятие?', a: 'Каждая встреча остаётся в записи, а материалы и дневник самонаблюдения доступны всё время подписки — можно наверстать в своём темпе.' },
+    { q: 'Почему нет индивидуального формата?', a: 'Группа 6–12 человек — часть метода: сравнение своих наблюдений с чужими помогает быстрее считывать телесные и эмоциональные сигналы. Для персональной динамики в тарифе «Опора+» есть личный разбор протокола.' }
+  ];
+
+  componentDidMount() {
+    this._onResize = () => this.setState({ isMobile: window.innerWidth <= 720 });
+    window.addEventListener('resize', this._onResize);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._onResize);
+  }
+
+  renderVals() {
+    const s = this.state;
+    const modules = this.moduleData.map((m, i) => ({
+      title: m.title,
+      week: m.week,
+      numLabel: '0' + (i + 1),
+      isOpen: s.openModule === i,
+      chevRotate: s.openModule === i ? 'rotate(180deg)' : 'rotate(0deg)',
+      toggle: () => this.setState({ openModule: s.openModule === i ? null : i })
+    }));
+    const faqs = this.faqData.map((f, i) => ({
+      q: f.q, a: f.a,
+      isOpen: s.openFaq === i,
+      chevRotate: s.openFaq === i ? 'rotate(180deg)' : 'rotate(0deg)',
+      toggle: () => this.setState({ openFaq: s.openFaq === i ? null : i })
+    }));
+    const isFull = s.pricingMode === 'full';
+    return {
+      isMobile: s.isMobile,
+      mobileSpacerHeight: s.isMobile ? '76px' : '0px',
+      screeningItems: this.screening,
+      consequenceCards: this.consequences,
+      modules,
+      benefits: this.benefitsData,
+      timelineItems: this.timelineData,
+      authorStats: this.authorStatsData,
+      faqs,
+      fullBg: isFull ? 'var(--purple-dark)' : 'transparent',
+      fullColor: isFull ? '#fff' : 'var(--muted)',
+      instBg: !isFull ? 'var(--purple-dark)' : 'transparent',
+      instColor: !isFull ? '#fff' : 'var(--muted)',
+      setFull: () => this.setState({ pricingMode: 'full' }),
+      setInstallments: () => this.setState({ pricingMode: 'installments' }),
+      priceOpora: isFull ? '8 900 ₽' : '3 × 2 990 ₽',
+      priceOporaPlus: isFull ? '14 900 ₽' : '3 × 4 990 ₽',
+      form: s.form,
+      submitted: s.submitted,
+      formError: s.formError,
+      onNameChange: (e) => this.setState({ form: { ...s.form, name: e.target.value } }),
+      onContactChange: (e) => this.setState({ form: { ...s.form, contact: e.target.value } }),
+      onConsentChange: (e) => this.setState({ form: { ...s.form, consent: e.target.checked } }),
+      onSubmit: () => {
+        if (!s.form.name.trim() || !s.form.contact.trim()) {
+          this.setState({ formError: 'Заполните имя и телефон или e-mail' });
+          return;
+        }
+        if (!s.form.consent) {
+          this.setState({ formError: 'Нужно согласие на обработку персональных данных' });
+          return;
+        }
+        this.setState({ submitted: true, formError: '' });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
