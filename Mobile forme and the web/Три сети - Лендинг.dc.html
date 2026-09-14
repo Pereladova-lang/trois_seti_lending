@@ -73,6 +73,55 @@
     </div>
   </section>
 
+  <!-- QUIZ: DAY MAP -->
+  <section id="daymap" data-screen-label="Квиз «Карта дня»" style="padding:clamp(20px,4vw,32px) clamp(20px,6vw,64px) clamp(40px,7vw,72px); max-width:720px; margin:0 auto;">
+    <div style="background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:clamp(24px,4vw,36px);">
+
+      <sc-if value="{{ quizIntro }}" hint-placeholder-val="{{ true }}">
+        <div style="text-align:center;">
+          <div style="display:inline-block; font-size:12.5px; font-weight:600; letter-spacing:0.04em; color:var(--purple-dark); background:rgba(107,79,158,0.09); padding:5px 12px; border-radius:100px; margin-bottom:16px;">Займёт 30 секунд</div>
+          <h2 style="font-family:'Source Serif 4',serif; font-weight:600; font-size:clamp(22px,3.2vw,28px); margin:0 0 10px; color:var(--ink);">Карта дня: какая сеть сейчас у вас активна?</h2>
+          <p style="font-size:15px; color:var(--muted); margin:0 auto 24px; max-width:480px;">4 коротких вопроса про сегодня — без баллов и диагнозов, просто чтобы увидеть, где сейчас ваше внимание.</p>
+          <button onClick="{{ quizStart }}" style="border:none; background:var(--gold); color:var(--ink); font-weight:600; font-size:15px; padding:13px 26px; border-radius:12px; cursor:pointer;">Пройти карту дня →</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ quizActive }}">
+        <div>
+          <div style="display:flex; gap:6px; margin-bottom:22px;">
+            <sc-for list="{{ quizDots }}" as="d" hint-placeholder-count="4">
+              <div style="height:4px; flex:1; border-radius:100px; background:{{ d.bg }};"></div>
+            </sc-for>
+          </div>
+          <div style="font-size:12.5px; color:var(--muted); margin-bottom:10px;">Вопрос {{ quizStepLabel }} из {{ quizTotal }}</div>
+          <h3 style="font-family:'Source Serif 4',serif; font-weight:600; font-size:clamp(18px,2.4vw,22px); margin:0 0 20px; color:var(--ink);">{{ quizQuestionText }}</h3>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <sc-for list="{{ quizOptions }}" as="o" hint-placeholder-count="4">
+              <button onClick="{{ o.select }}" style="text-align:left; border:1px solid var(--line); background:var(--bg); color:var(--ink); font-size:15px; font-family:'Sora',sans-serif; padding:14px 16px; border-radius:12px; cursor:pointer;">{{ o.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ quizDone }}">
+        <div>
+          <div style="display:inline-block; font-size:12.5px; font-weight:600; letter-spacing:0.04em; color:var(--gold-dark); background:rgba(176,141,62,0.1); padding:5px 12px; border-radius:100px; margin-bottom:16px;">Ваша карта дня</div>
+          <h3 style="font-family:'Source Serif 4',serif; font-weight:600; font-size:clamp(20px,2.8vw,26px); margin:0 0 12px; color:var(--ink);">{{ quizResultTitle }}</h3>
+          <p style="font-size:15.5px; color:var(--muted); margin:0 0 24px;">{{ quizResultText }}</p>
+          <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:18px;">
+            <a href="#program" onClick="{{ quizGoToModule }}" style="display:inline-block; background:var(--purple-dark); color:#fff; font-weight:600; font-size:14.5px; padding:12px 20px; border-radius:12px;">{{ quizModuleCta }}</a>
+            <a href="#cta-form" style="display:inline-block; background:transparent; border:1.5px solid var(--purple); color:var(--purple-dark); font-weight:600; font-size:14.5px; padding:12px 20px; border-radius:12px;">Записаться на курс</a>
+          </div>
+          <div style="font-size:13px; color:var(--muted);">Если сейчас вам физически тяжело и есть мысли о вреде себе — это <a href="#screening" style="color:var(--purple-dark);">важный блок ниже</a>, а не курс.</div>
+          <div style="margin-top:18px;">
+            <button onClick="{{ quizRestart }}" style="border:none; background:transparent; color:var(--muted); font-size:13px; text-decoration:underline; cursor:pointer; padding:0;">Пройти ещё раз</button>
+          </div>
+        </div>
+      </sc-if>
+
+    </div>
+  </section>
+
   <!-- INSIGHT -->
   <section id="insight" data-screen-label="Инсайт" style="background:var(--purple-dark); padding:clamp(48px,8vw,90px) clamp(20px,6vw,64px);">
     <div style="max-width:820px; margin:0 auto; text-align:center;">
@@ -326,7 +375,58 @@ class Component extends DCLogic {
     pricingMode: 'full',
     form: { name: '', contact: '', consent: false },
     submitted: false,
-    formError: ''
+    formError: '',
+    quiz: { step: 0, tally: { dmn: 0, sn: 0, cen: 0, balance: 0 } }
+  };
+
+  quizQuestionsData = [
+    { text: 'Где сейчас ваше внимание, если честно?', options: [
+      { label: 'Прокручиваю прошлые разговоры или что сказать', net: 'dmn' },
+      { label: 'Слежу, не случится ли что-то плохое', net: 'sn' },
+      { label: 'Пытаюсь сосредоточиться, но не получается', net: 'cen' },
+      { label: 'Более-менее собран(а)', net: 'balance' }
+    ]},
+    { text: 'Как вы обычно начинаете утро?', options: [
+      { label: 'С тревожной мысли о делах', net: 'dmn' },
+      { label: 'С проверки телефона или новостей «на всякий случай»', net: 'sn' },
+      { label: 'С попытки сразу впрячься в работу', net: 'cen' },
+      { label: 'Спокойно', net: 'balance' }
+    ]},
+    { text: 'Что мешает больше всего последнюю неделю?', options: [
+      { label: 'Не могу остановить внутренний монолог', net: 'dmn' },
+      { label: 'Реагирую на мелочи слишком остро', net: 'sn' },
+      { label: 'Начинаю дело и бросаю', net: 'cen' },
+      { label: 'Ничего особенного', net: 'balance' }
+    ]},
+    { text: 'Когда вам труднее всего уснуть?', options: [
+      { label: 'Мысли «пережёвывают» день', net: 'dmn' },
+      { label: 'Тело в напряжении, будто что-то не так', net: 'sn' },
+      { label: 'Кручу в голове невыполненные задачи', net: 'cen' },
+      { label: 'Сплю нормально', net: 'balance' }
+    ]}
+  ];
+
+  quizResultsData = {
+    dmn: {
+      title: 'Сегодня у вас активна сеть блуждания мыслей',
+      text: 'Это не характер и не лень — это то, что мозг делает, когда не занят конкретной задачей: блуждание мыслей, воспоминания, тревожные петли. Этому посвящён отдельный модуль курса.',
+      moduleIndex: 3
+    },
+    sn: {
+      title: 'Сегодня в повышенной готовности сеть сигналов и значимости',
+      text: 'Отсюда ощущение «что-то не так», даже когда явной причины нет — эта сеть замечает важное и переключает на него внимание. Этому посвящён отдельный модуль курса.',
+      moduleIndex: 2
+    },
+    cen: {
+      title: 'Сеть фокуса и действия сейчас истощена',
+      text: 'Отсюда трудности начать дело или довести его до конца — на целенаправленное внимание и решения сейчас просто не хватает ресурса. Этому посвящён отдельный модуль курса.',
+      moduleIndex: 1
+    },
+    balance: {
+      title: 'Похоже, сегодня у вас неплохой баланс',
+      text: 'Это хороший день, чтобы просто понаблюдать за собой. Курс подойдёт скорее как способ закрепить это состояние и не растерять его в перегруженные периоды.',
+      moduleIndex: null
+    }
   };
 
   screening = [
@@ -406,6 +506,40 @@ class Component extends DCLogic {
       toggle: () => this.setState({ openFaq: s.openFaq === i ? null : i })
     }));
     const isFull = s.pricingMode === 'full';
+
+    const quiz = s.quiz;
+    const quizTotal = this.quizQuestionsData.length;
+    const quizIntro = quiz.step === 0;
+    const quizActive = quiz.step >= 1 && quiz.step <= quizTotal;
+    const quizDone = quiz.step > quizTotal;
+    let quizQuestionText = '', quizOptions = [];
+    if (quizActive) {
+      const q = this.quizQuestionsData[quiz.step - 1];
+      quizQuestionText = q.text;
+      quizOptions = q.options.map(o => ({
+        label: o.label,
+        select: () => {
+          const tally = { ...quiz.tally, [o.net]: quiz.tally[o.net] + 1 };
+          this.setState({ quiz: { step: quiz.step + 1, tally } });
+        }
+      }));
+    }
+    const quizDots = Array.from({ length: quizTotal }, (_, i) => ({
+      bg: i < quiz.step ? 'var(--purple)' : 'var(--line)'
+    }));
+    let quizResultTitle = '', quizResultText = '', quizModuleCta = '', quizGoToModule = () => {};
+    if (quizDone) {
+      const order = ['dmn', 'sn', 'cen', 'balance'];
+      let bestKey = 'balance', bestVal = -1;
+      order.forEach(k => { if (quiz.tally[k] > bestVal) { bestVal = quiz.tally[k]; bestKey = k; } });
+      const resultData = this.quizResultsData[bestKey];
+      const moduleInfo = resultData.moduleIndex != null ? this.moduleData[resultData.moduleIndex] : null;
+      quizResultTitle = resultData.title;
+      quizResultText = resultData.text;
+      quizModuleCta = moduleInfo ? ('Модуль ' + (resultData.moduleIndex + 1) + ': ' + moduleInfo.title.split(' — ')[0]) : 'Посмотреть программу курса';
+      quizGoToModule = () => { if (moduleInfo) this.setState({ openModule: resultData.moduleIndex }); };
+    }
+
     return {
       isMobile: s.isMobile,
       mobileSpacerHeight: s.isMobile ? '76px' : '0px',
@@ -427,6 +561,20 @@ class Component extends DCLogic {
       form: s.form,
       submitted: s.submitted,
       formError: s.formError,
+      quizIntro,
+      quizActive,
+      quizDone,
+      quizQuestionText,
+      quizOptions,
+      quizDots,
+      quizStepLabel: Math.min(quiz.step, quizTotal),
+      quizTotal,
+      quizResultTitle,
+      quizResultText,
+      quizModuleCta,
+      quizGoToModule,
+      quizStart: () => this.setState({ quiz: { step: 1, tally: { dmn: 0, sn: 0, cen: 0, balance: 0 } } }),
+      quizRestart: () => this.setState({ quiz: { step: 0, tally: { dmn: 0, sn: 0, cen: 0, balance: 0 } } }),
       onNameChange: (e) => this.setState({ form: { ...s.form, name: e.target.value } }),
       onContactChange: (e) => this.setState({ form: { ...s.form, contact: e.target.value } }),
       onConsentChange: (e) => this.setState({ form: { ...s.form, consent: e.target.checked } }),
