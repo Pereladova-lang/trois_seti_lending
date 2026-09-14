@@ -80,11 +80,32 @@
       <div style="font-size:12px; color:var(--muted); margin-top:4px;">ИП Переладова К.С. · ИНН 771865053157 · ОГРНИП 318774600023545 · тел: +7 (916) 381-33-99</div>
     </div>
     <div style="display:flex; gap:20px; flex-wrap:wrap;">
-      <a href="#" style="font-size:13px; color:var(--muted);">Политика конфиденциальности</a>
-      <a href="#" style="font-size:13px; color:var(--muted);">Политика обработки персональных данных</a>
-      <a href="#" style="font-size:13px; color:var(--muted);">Публичная оферта</a>
+      <a href="privacy.html" style="font-size:13px; color:var(--muted);">Политика конфиденциальности</a>
+      <a href="personaldata.html" style="font-size:13px; color:var(--muted);">Политика обработки персональных данных</a>
+      <a href="offer.html" style="font-size:13px; color:var(--muted);">Публичная оферта</a>
     </div>
   </footer>
+
+  <!-- COOKIE BANNER -->
+  <div id="cookie-banner" style="display:none; position:fixed; left:0; right:0; bottom:0; z-index:60; background:var(--ink); color:#fff; padding:14px 16px; flex-wrap:wrap; gap:12px; align-items:center; justify-content:center; box-shadow:0 -4px 16px rgba(0,0,0,0.15);">
+    <span style="font-size:13px; max-width:640px; text-align:center;">Мы используем файлы cookie для работы сайта и, при необходимости, аналитики. Подробнее — в <a href="privacy.html" style="color:#F0C674; text-decoration:underline;">Политике конфиденциальности</a>.</span>
+    <button id="cookie-accept" style="border:none; background:var(--gold); color:var(--ink); font-weight:600; font-size:13.5px; padding:9px 18px; border-radius:10px; cursor:pointer; flex-shrink:0;">Принять</button>
+  </div>
+  <script>
+    (function () {
+      var KEY = 'tri-seti-cookie-consent';
+      var accepted = false;
+      try { accepted = localStorage.getItem(KEY) === '1'; } catch (e) {}
+      var banner = document.getElementById('cookie-banner');
+      if (!accepted && banner) {
+        banner.style.display = 'flex';
+        document.getElementById('cookie-accept').addEventListener('click', function () {
+          try { localStorage.setItem(KEY, '1'); } catch (e) {}
+          banner.style.display = 'none';
+        });
+      }
+    })();
+  </script>
 
 </div>
 </body>

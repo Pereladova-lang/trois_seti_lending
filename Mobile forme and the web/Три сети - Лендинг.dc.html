@@ -307,7 +307,7 @@
             <input value="{{ form.contact }}" onChange="{{ onContactChange }}" placeholder="Телефон или e-mail" style="border:1px solid var(--line); border-radius:12px; padding:13px 16px; font-size:15px; font-family:'Sora',sans-serif; background:var(--bg); color:var(--ink);">
             <label style="display:flex; gap:10px; align-items:flex-start; font-size:13px; color:var(--muted); cursor:pointer;">
               <input type="checkbox" checked="{{ form.consent }}" onChange="{{ onConsentChange }}" style="margin-top:2px; accent-color:var(--purple);">
-              <span>Согласен(на) с <a href="#" style="color:var(--purple-dark);">политикой конфиденциальности</a> и на <a href="#" style="color:var(--purple-dark);">обработку персональных данных</a></span>
+              <span>Согласен(на) с <a href="privacy.html" style="color:var(--purple-dark);">политикой конфиденциальности</a> и на <a href="personaldata.html" style="color:var(--purple-dark);">обработку персональных данных</a></span>
             </label>
             <div style="font-size:12px; color:var(--muted); line-height:1.5;">Это первый поток курса. Мы собираем обезличенную обратную связь (бланки самодиагностики «до/после») для улучшения программы — участие в опросе добровольно и не влияет на доступ к занятиям.</div>
             <sc-if value="{{ formError }}">
@@ -353,9 +353,9 @@
       <div style="font-size:12px; color:var(--muted); margin-top:4px;">ИП Переладова К.С. · ИНН 771865053157 · ОГРНИП 318774600023545 · тел: +7 (916) 381-33-99</div>
     </div>
     <div style="display:flex; gap:20px; flex-wrap:wrap;">
-      <a href="#" style="font-size:13px; color:var(--muted);">Политика конфиденциальности</a>
-      <a href="#" style="font-size:13px; color:var(--muted);">Политика обработки персональных данных</a>
-      <a href="#" style="font-size:13px; color:var(--muted);">Публичная оферта</a>
+      <a href="privacy.html" style="font-size:13px; color:var(--muted);">Политика конфиденциальности</a>
+      <a href="personaldata.html" style="font-size:13px; color:var(--muted);">Политика обработки персональных данных</a>
+      <a href="offer.html" style="font-size:13px; color:var(--muted);">Публичная оферта</a>
     </div>
   </footer>
 
@@ -366,6 +366,14 @@
     </div>
   </sc-if>
   <div style="height:{{ mobileSpacerHeight }};"></div>
+
+  <!-- COOKIE BANNER -->
+  <sc-if value="{{ !cookieAccepted }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed; left:0; right:0; bottom:{{ mobileSpacerHeight }}; z-index:60; background:var(--ink); color:#fff; padding:14px 16px; display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:center; box-shadow:0 -4px 16px rgba(0,0,0,0.15);">
+      <span style="font-size:13px; max-width:640px; text-align:center;">Мы используем файлы cookie для работы сайта и, при необходимости, аналитики. Подробнее — в <a href="privacy.html" style="color:#F0C674; text-decoration:underline;">Политике конфиденциальности</a>.</span>
+      <button onClick="{{ acceptCookies }}" style="border:none; background:var(--gold); color:var(--ink); font-weight:600; font-size:13.5px; padding:9px 18px; border-radius:10px; cursor:pointer; flex-shrink:0;">Принять</button>
+    </div>
+  </sc-if>
 
 </div>
 
@@ -380,7 +388,11 @@ class Component extends DCLogic {
     form: { name: '', contact: '', consent: false },
     submitted: false,
     formError: '',
-    quiz: { step: 0, tally: { dmn: 0, sn: 0, cen: 0, balance: 0 } }
+    quiz: { step: 0, tally: { dmn: 0, sn: 0, cen: 0, balance: 0 } },
+    cookieAccepted: typeof window !== 'undefined' && (() => {
+      try { return localStorage.getItem('tri-seti-cookie-consent') === '1'; }
+      catch (e) { return false; }
+    })()
   };
 
   quizQuestionsData = [
@@ -565,6 +577,11 @@ class Component extends DCLogic {
       form: s.form,
       submitted: s.submitted,
       formError: s.formError,
+      cookieAccepted: s.cookieAccepted,
+      acceptCookies: () => {
+        try { localStorage.setItem('tri-seti-cookie-consent', '1'); } catch (e) {}
+        this.setState({ cookieAccepted: true });
+      },
       quizIntro,
       quizActive,
       quizDone,
